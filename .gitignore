@@ -1,15 +1,12 @@
-# Virtual environments
 .venv/
 venv/
 env/
 
-# Python cache
 __pycache__/
 *.pyc
 
-# Env vars
+data/vectordb/
+
 .env
 
-# OS
 .DS_Store
-
