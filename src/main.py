@@ -1,12 +1,10 @@
 import sys
 
-from vectorstore import search_vectorstore
+from rag import answer_question
 
 def main():
     query = " ".join(sys.argv[1:]) or "fastapi"
-    results = search_vectorstore(query)
-    for i, chunk in enumerate(results, start=1):
-        print(f"{i}. {chunk}")
+    print(answer_question(query))
 
 
 if __name__ == "__main__":
