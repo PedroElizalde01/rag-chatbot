@@ -1,14 +1,18 @@
-import os
 import google.generativeai as genai
-from dotenv import load_dotenv
+from config import GEMINI_MODEL, GOOGLE_API_KEY
 
-load_dotenv()
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+genai.configure(api_key=GOOGLE_API_KEY)
 
-def build_prompt(context: list[str], question: str) -> str:
+def build_prompt(context: list[str], question: str, history: list[dict[str, str]]) -> str:
     context_text = "\n\n".join(context) if context else ""
+    history_text = "\n".join(
+        f"{'User' if item['role'] == 'user' else 'Assistant'}: {item['content']}"
+        for item in history
+    )
     return (
         "You are an expert programming assistant.\n\n"
+        "CONVERSATION HISTORY:\n"
+        f"{history_text}\n\n"
         "CONTEXT:\n"
         f"{context_text}\n\n"
         "USER QUESTION:\n"
@@ -19,7 +23,7 @@ def build_prompt(context: list[str], question: str) -> str:
         "Be concise but complete"
     )
 
-def send_prompt(prompt: str, model: str = "models/gemini-flash-latest") -> str:
+def send_prompt(prompt: str, model: str = GEMINI_MODEL) -> str:
     client = genai.GenerativeModel(model)
     response = client.generate_content(prompt)
     return response.text or ""
