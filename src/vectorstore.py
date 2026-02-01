@@ -1,9 +1,12 @@
 import chromadb
+import logging
 from pathlib import Path
 
 from embeddings import embed_text
 
 VECTORDB_PATH = Path(__file__).parent.parent / "data" / "vectordb"
+
+logging.getLogger("chromadb").setLevel(logging.ERROR)
 
 def get_chroma_client() -> chromadb.PersistentClient:
     return chromadb.PersistentClient(path=str(VECTORDB_PATH))
