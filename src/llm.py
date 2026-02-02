@@ -4,7 +4,12 @@ from config import GEMINI_MODEL, GOOGLE_API_KEY
 genai.configure(api_key=GOOGLE_API_KEY)
 
 def build_prompt(context: list[str], question: str, history: list[dict[str, str]]) -> str:
-    context_text = "\n\n".join(context) if context else ""
+    if context:
+        context_text = "\n\n".join(
+            f"Source {idx + 1}: {chunk}" for idx, chunk in enumerate(context)
+        )
+    else:
+        context_text = ""
     history_text = "\n".join(
         f"{'User' if item['role'] == 'user' else 'Assistant'}: {item['content']}"
         for item in history

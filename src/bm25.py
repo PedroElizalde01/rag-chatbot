@@ -2,13 +2,13 @@ import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from threading import Lock
+from threading import RLock
 
 from rank_bm25 import BM25Okapi
 
 BM25_INDEX_PATH = Path(__file__).parent.parent / "data" / "bm25" / "index.json"
 
-_LOCK = Lock()
+_LOCK = RLock()
 _CACHED_INDEX = None
 
 
