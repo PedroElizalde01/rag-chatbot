@@ -6,6 +6,7 @@ __pycache__/
 *.pyc
 
 data/vectordb/
+data/bm25/
 
 .env
 

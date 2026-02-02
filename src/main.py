@@ -1,12 +1,12 @@
 import sys
 
-from ingestion import ingest_documents_dir, init_vector_store
+from bm25 import BM25_INDEX_PATH
+from ingestion import ingest_documents_dir, init_vector_store, refresh_bm25_from_vectorstore
 from memory import Memory
 from rag import answer_question
 
 GREEN = "\033[92m"
 RESET = "\033[0m"
-
 
 def ensure_documents_loaded() -> None:
     init_vector_store()
@@ -15,6 +15,10 @@ def ensure_documents_loaded() -> None:
         print(f"Loaded {ingested} chunks from documents.")
     else:
         print("No new documents to load.")
+    if not BM25_INDEX_PATH.exists():
+        rebuilt = refresh_bm25_from_vectorstore()
+        if rebuilt > 0:
+            print(f"Built BM25 index for {rebuilt} chunks.")
 
 def main():
     ensure_documents_loaded()
