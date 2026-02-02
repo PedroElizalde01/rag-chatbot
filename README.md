@@ -60,6 +60,6 @@ python src/main.py "What is the main topic of the document?"
 7. **Gemini-Powered Generation** - Uses Google's Gemini API for generating responses
 
 ## Next Steps
-- [ ] Implement hybrid search (semantic + keyword)
+- [x] Implement hybrid search (semantic + keyword)
 - [ ] Add evaluation & metrics
 - [ ] Concurrent embedding
